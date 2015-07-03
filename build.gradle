@@ -1,0 +1,69 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.7'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+// NetBeans will automatically add "run" and "debug" tasks relying on the
+// "mainClass" property. You may however define the property prior executing
+// tasks by passing a "-PmainClass=<QUALIFIED_CLASS_NAME>" argument.
+//
+// Note however, that you may define your own "run" and "debug" task if you
+// prefer. In this case NetBeans will not add these tasks but you may rely on
+// your own implementation.
+if (!hasProperty('mainClass')) {
+    ext.mainClass = ''
+}
+
+ext {
+	jmonkeyengine_version = '3.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'http://updates.jmonkeyengine.org/maven' }
+}
+
+dependencies {
+	compile fileTree(dir: 'lib', include: ['*.jar'])
+        
+	compile "com.jme3:jme3-core:$jmonkeyengine_version.+"
+	compile "com.jme3:jme3-effects:$jmonkeyengine_version.+"
+	compile "com.jme3:jme3-networking:$jmonkeyengine_version.+"
+	//    	compile "com.jme3:jme3-plugins:$jmonkeyengine_version.+"
+	////    	compile "com.jme3:jme3-jogg:$jmonkeyengine_version.+"
+	////    	compile "com.jme3:jme3-terrain:$jmonkeyengine_version.+"
+	compile "com.jme3:jme3-blender:$jmonkeyengine_version.+"
+	compile "com.jme3:jme3-jbullet:$jmonkeyengine_version.+"
+	//    	compile "com.jme3:jme3-desktop:$jmonkeyengine_version.+"
+	compile "com.jme3:jme3-lwjgl:$jmonkeyengine_version.+"
+	    	//
+	    	//	compile "com.jme3:jme3-jbullet:$jmonkeyengine_version.+"
+	    	//	compile "com.jme3:jme3-bullet-natives:$jmonkeyengine_version.+"
+	    	//
+
+	compile "com.jme3:jme3-niftygui:$jmonkeyengine_version.+"
+
+	//	compile 'com.google.code.gson:gson:2.3.1'
+	compile 'org.bushe:eventbus:1.4'
+	compile 'com.google.guava:guava:18.0'
+	compile 'org.apache.commons:commons-lang3:3.3.2'
+	//	compile 'org.reflections:reflections:0.9.8'
+	//	compile 'org.simpleframework:simple-xml:2.7.1'
+
+	testCompile 'org.testng:testng:6.8'
+	compile 'com.fasterxml.jackson.core:jackson-core:2.5.3'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.5.0'
+}
+
+sourceSets {
+	main {
+		java { srcDir 'src'}
+		resources { srcDir 'assets' }
+	}
+	test {
+		java { srcDir 'test/java' }
+		resources { srcDir "test/resources" }
+	}
+}
