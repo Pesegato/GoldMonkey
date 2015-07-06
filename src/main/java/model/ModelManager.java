@@ -1,6 +1,5 @@
 package model;
 
-import tools.LogUtil;
 import model.builders.definitions.DefParser;
 
 public class ModelManager {

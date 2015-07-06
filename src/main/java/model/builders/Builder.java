@@ -4,7 +4,8 @@
  */
 package model.builders;
 
-import tools.LogUtil;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.builders.definitions.Definition;
 
 /**
@@ -25,14 +26,14 @@ public abstract class Builder {
 	}
 
 	public void printUnknownElement(String elementName){
-		LogUtil.logger.warning("Element '"+elementName+"' unknown in definition '"+getId()+"'.");
+            Logger.getLogger(Builder.class.getName()).log(Level.SEVERE, "Element ''{0}'' unknown in definition ''{1}''.", new Object[]{elementName, getId()});
 	}
 
 	public void printUnknownArgument(String elementName, String argumentName){
-		LogUtil.logger.warning("Argument '"+argumentName+"' unknown for element '"+elementName+"' in definition '"+getId()+"'.");
+            Logger.getLogger(Builder.class.getName()).log(Level.SEVERE, "Argument ''{0}'' unknown for element ''{1}'' in definition ''{2}''.", new Object[]{argumentName, elementName, getId()});
 	}
 
 	public void printUnknownValue(String elementName, String value){
-		LogUtil.logger.warning("value '"+value+"' unknown for element '"+elementName+"' in definition '"+getId()+"'.");
+            Logger.getLogger(Builder.class.getName()).log(Level.SEVERE, "value ''{0}'' unknown for element ''{1}'' in definition ''{2}''.", new Object[]{value, elementName, getId()});
 	}
 }
