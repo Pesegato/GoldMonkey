@@ -10,23 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.builders.Builder;
-import model.builders.CliffShapeBuilder;
-import model.builders.EffectBuilder;
-import model.builders.ManmadeFaceBuilder;
-import model.builders.MapStyleBuilder;
-import model.builders.MoverBuilder;
-import model.builders.NaturalFaceBuilder;
-import model.builders.ProjectileBuilder;
-import model.builders.TrinketBuilder;
-import model.builders.TurretBuilder;
-import model.builders.UnitBuilder;
-import model.builders.WeaponBuilder;
-import model.builders.actors.ActorBuilder;
-import model.builders.actors.AnimationActorBuilder;
-import model.builders.actors.ModelActorBuilder;
-import model.builders.actors.ParticleActorBuilder;
-import model.builders.actors.PhysicActorBuilder;
-import model.builders.actors.SoundActorBuilder;
 import exception.TechnicalException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +75,7 @@ public class BuilderManager {
                 } catch (Exception ex) {
                     Logger.getLogger(BuilderManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
+/*
 		switch (def.getType()) {
 			case UNIT:
 				typed.put(def.getId(), new UnitBuilder(def));
@@ -149,7 +132,7 @@ public class BuilderManager {
 			case MANMADE_FACE:
 				typed.put(def.getId(), new ManmadeFaceBuilder(def));
 				break;
-		}
+		}*/
 	}
 
 	public static <T extends Builder> T getBuilder(String type, String id, Class<T> clazz) {
@@ -165,7 +148,7 @@ public class BuilderManager {
 		return (T) res;
 	}
 
-	public static UnitBuilder getUnitBuilder(String id) {
+/*	public static UnitBuilder getUnitBuilder(String id) {
 		return getBuilder(UNIT, id, UnitBuilder.class);
 	}
 
@@ -244,5 +227,5 @@ public class BuilderManager {
 	public static List<MapStyleBuilder> getAllMapStyleBuilders() {
 		return getAllBuilders(MAP_STYLE, MapStyleBuilder.class);
 	}
-
+*/
 }

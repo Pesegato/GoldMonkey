@@ -1,12 +1,7 @@
 package model;
 
 import tools.LogUtil;
-import model.battlefield.Battlefield;
-import model.battlefield.BattlefieldFactory;
-import model.battlefield.map.parcel.ParcelManager;
 import model.builders.definitions.DefParser;
-import event.BattleFieldUpdateEvent;
-import event.EventManager;
 
 public class ModelManager {
 	public static final String CONFIG_PATH = "assets/data";
@@ -15,9 +10,9 @@ public class ModelManager {
 	private static final int DEFAULT_WIDTH = 64;
 	private static final int DEFAULT_HEIGHT = 32;
 
-	private static final BattlefieldFactory factory;
+//	private static final BattlefieldFactory factory;
 
-	private static Battlefield battlefield;
+	private static Object battlefield;
 	private final static DefParser parser;
 	private static double nextUpdate = 0;
 	private static boolean battlefieldReady = true;
@@ -25,7 +20,7 @@ public class ModelManager {
 	static {
 		parser = new DefParser(CONFIG_PATH);
 
-		factory = new BattlefieldFactory();
+		//factory = new BattlefieldFactory();
 		// setNewBattlefield();
 	}
 
@@ -40,7 +35,7 @@ public class ModelManager {
 			parser.readFile();
 		}
 	}
-
+/*
 	public static void loadBattlefield() {
 		Battlefield loadedBattlefield = factory.loadWithFileChooser();
 		setBattlefield(loadedBattlefield);
@@ -49,16 +44,16 @@ public class ModelManager {
 	public static void loadBattlefield(String file) {
 		Battlefield loadedBattlefield = factory.load(file);
 		setBattlefield(loadedBattlefield);
-	}
+	}*/
 
 	public static void saveBattlefield() {
-		factory.save(battlefield);
+		//factory.save(battlefield);
 	}
 
 	public static void setNewBattlefield() {
-		setBattlefield(factory.getNew(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+		//setBattlefield(factory.getNew(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 	}
-
+/*
 	private static void setBattlefield(Battlefield battlefield) {
 		if (battlefield != null) {
 			ModelManager.battlefield = battlefield;
@@ -80,7 +75,7 @@ public class ModelManager {
 		else
 			throw new RuntimeException("Trying to acces to battlefield while it is unavailable");
 	}
-	
+	*/
 	public static void setBattlefieldUnavailable(){
 		battlefieldReady = false;
 	}
