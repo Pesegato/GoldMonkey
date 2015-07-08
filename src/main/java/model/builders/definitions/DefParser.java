@@ -20,8 +20,6 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import exception.TechnicalException;
-
 /**
  * @author Benoît
  */
@@ -51,7 +49,7 @@ public class DefParser {
 		ArrayList<File> res = new ArrayList<>();
 		File folder = new File(folderPath);
 		if (!folder.exists()) {
-			throw new TechnicalException("the folder " + folderPath +  " was not found.");
+			throw new Error("the folder " + folderPath +  " was not found.");
 		}
 		for (File f : folder.listFiles()) {
 			res.add(f);
