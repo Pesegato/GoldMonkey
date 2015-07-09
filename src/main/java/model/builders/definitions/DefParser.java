@@ -4,13 +4,10 @@
 package model.builders.definitions;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.stream.XMLEventReader;
@@ -26,22 +23,10 @@ import javax.xml.stream.events.XMLEvent;
 public class DefParser {
 	private static final String ID = "id";
 	Map<File, Long> filesAndTimers = new HashMap<>();
-	List<File> filesToRead = new ArrayList<>();
+	String[] filesToRead;
 
-	public DefParser(String path) {
-		ArrayList<File> filesAndDir = getFiles(path);
-		while (!filesAndDir.isEmpty()) {
-			ArrayList<File> toAdd = new ArrayList<>();
-			for (File f : filesAndDir) {
-				if (f.isFile()) {
-					addFile(f);
-				} else if (f.isDirectory()) {
-					toAdd.addAll(getFiles(f.getAbsolutePath()));
-				}
-			}
-			filesAndDir.clear();
-			filesAndDir.addAll(toAdd);
-		}
+	public DefParser(String... files) {
+            filesToRead=files;
 		readFile();
 	}
 
@@ -62,20 +47,14 @@ public class DefParser {
 	}
 
 	public void readFile() {
-		filesToRead.clear();
-		for (File f : filesAndTimers.keySet()) {
-			if (f.lastModified() != filesAndTimers.get(f)) {
-				filesAndTimers.put(f, f.lastModified());
-				filesToRead.add(f);
-			}
-		}
 		String log = "updated : ";
-		for (File f : filesToRead) {
+                boolean notempty=false;
+		for (String fileName : filesToRead) {
 			try {
-				String fileName = f.getName();
+                            notempty=true;
 				log = log.concat(fileName+", ");
 				XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-				InputStream in = new FileInputStream(f);
+				InputStream in = this.getClass().getResourceAsStream(fileName);
 				XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 
 				Definition def = null;
@@ -95,13 +74,11 @@ public class DefParser {
 						// RuntimeException("("+fileName+") At line "+event.getLocation().getLineNumber()+", find a closing element that is not closing a definition"+elementName);
 					}
 				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
 			} catch (XMLStreamException e) {
 				e.printStackTrace();
 			}
 		}
-		if (!filesToRead.isEmpty()) {
+		if (notempty) {
 			BuilderManager.buildLinks();
 		}
 

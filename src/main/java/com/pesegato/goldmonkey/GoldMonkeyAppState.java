@@ -9,17 +9,18 @@ public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
 
     boolean continuousUpdate = false;
     private static final double UPDATE_DELAY = 1;
-    public static final String CONFIG_PATH = "assets/data";
     private static DefParser parser;
+    String[] files;
 
-    public GoldMonkeyAppState(boolean continuousUpdate) {
+    public GoldMonkeyAppState(boolean continuousUpdate, String... files) {
         this.continuousUpdate = continuousUpdate;
+        this.files=files;
     }
 
     @Override
     public void initialize(AppStateManager stateManager, Application app) {
         super.initialize(stateManager, app);
-        parser = new DefParser(CONFIG_PATH);
+        parser = new DefParser(files);
         parser.readFile();
         setEnabled(continuousUpdate);
     }
