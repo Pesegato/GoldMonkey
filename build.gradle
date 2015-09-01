@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-sourceCompatibility = '1.7'
+sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 // NetBeans will automatically add "run" and "debug" tasks relying on the
@@ -15,7 +15,7 @@ if (!hasProperty('mainClass')) {
 }
 
 ext {
-	jmonkeyengine_version = '3.0'
+	jmonkeyengine_version = '3.0.10'
 }
 
 repositories {
@@ -55,9 +55,5 @@ sourceSets {
 	main {
 		java { srcDir 'src'}
 		resources { srcDir 'assets' }
-	}
-	test {
-		java { srcDir 'test/java' }
-		resources { srcDir "test/resources" }
 	}
 }
