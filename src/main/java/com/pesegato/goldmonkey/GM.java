@@ -2,7 +2,6 @@
 package com.pesegato.goldmonkey;
 
 import com.jme3.math.ColorRGBA;
-import model.builders.ColorBuilder;
 import model.builders.definitions.BuilderManager;
 
 public class GM {
