@@ -6,7 +6,7 @@ import model.builders.definitions.Definition;
 
 public class StringBuilder extends Builder {
 
-    private static final String STRING = "string";
+    private static final String STRING = "String";
 
     String value;
 
@@ -21,7 +21,7 @@ public class StringBuilder extends Builder {
         }
     }
 
-    public String build() {
+    public String buildString() {
         return value;
     }
 
