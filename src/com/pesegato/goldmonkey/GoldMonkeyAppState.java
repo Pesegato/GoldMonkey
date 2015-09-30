@@ -3,6 +3,8 @@ package com.pesegato.goldmonkey;
 import com.jme3.app.Application;
 import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
+import java.util.ArrayList;
+import java.util.Arrays;
 import model.builders.definitions.DefParser;
 
 public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
@@ -14,7 +16,10 @@ public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
 
     public GoldMonkeyAppState(boolean continuousUpdate, String... files) {
         this.continuousUpdate = continuousUpdate;
-        this.files=files;
+        ArrayList<String> ffiles=new ArrayList<>();
+        ffiles.addAll(Arrays.asList(files));
+        ffiles.add("/values/strings.xml");
+        this.files=ffiles.toArray(files);
     }
 
     @Override
