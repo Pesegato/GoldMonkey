@@ -3,7 +3,10 @@
  */
 package model.builders.definitions;
 
+import com.pesegato.goldmonkey.GoldMonkeyAppState;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +57,11 @@ public class DefParser {
                             notempty=true;
 				log = log.concat(fileName+", ");
 				XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-				InputStream in = this.getClass().getResourceAsStream(fileName);
+                                InputStream in=null;
+                                if (GoldMonkeyAppState.external)
+                                    in = new FileInputStream(fileName);
+                                else
+                                    in = this.getClass().getResourceAsStream(fileName);
 				XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 
 				Definition def = null;
@@ -74,7 +81,7 @@ public class DefParser {
 						// RuntimeException("("+fileName+") At line "+event.getLocation().getLineNumber()+", find a closing element that is not closing a definition"+elementName);
 					}
 				}
-			} catch (XMLStreamException e) {
+			} catch (FileNotFoundException | XMLStreamException e) {
 				e.printStackTrace();
 			}
 		}

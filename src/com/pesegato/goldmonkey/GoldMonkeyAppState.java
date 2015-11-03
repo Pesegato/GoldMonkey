@@ -13,11 +13,16 @@ public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
     private static final double UPDATE_DELAY = 1;
     private static DefParser parser;
     String[] files;
+    public static boolean external;
 
-    public GoldMonkeyAppState(boolean continuousUpdate, String... files) {
+    public GoldMonkeyAppState(boolean continuousUpdate, boolean external, String... files) {
         this.continuousUpdate = continuousUpdate;
+        this.external=external;
         ArrayList<String> ffiles=new ArrayList<>();
         ffiles.addAll(Arrays.asList(files));
+        if (external)
+            ffiles.add("values/strings.xml");
+        else
         ffiles.add("/values/strings.xml");
         this.files=ffiles.toArray(files);
     }
