@@ -15,18 +15,17 @@ if (!hasProperty('mainClass')) {
 }
 
 ext {
-	jmonkeyengine_version = '3.0'
+	jmonkeyengine_version = '[3.1,)'
 }
 
 repositories {
-    mavenCentral()
-    maven { url 'http://updates.jmonkeyengine.org/maven' }
+    jcenter()
 }
 
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'])
         
-    	compile "com.jme3:jme3-core:$jmonkeyengine_version.+"
+    	compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
 
 
 }
