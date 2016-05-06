@@ -8,3 +8,4 @@ test-output
 .gradle/2.3/taskArtifacts/cache.properties
 *.bin
 .gradle/2.3/taskArtifacts/cache.properties.lock
+/.nb-gradle/

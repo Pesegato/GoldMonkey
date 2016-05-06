@@ -8,6 +8,14 @@ public class GM {
     public static ColorRGBA getColorRGBA(String id){
         return ((ColorBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.ColorBuilder",id, ColorBuilder.class)).buildColorRGBA();
     }
+    public static boolean existsData(String id) {
+        try {
+            DataBuilder d = ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class));
+            return true;
+        } catch (java.lang.IllegalArgumentException e) {
+            return false;
+        }
+    }
     public static boolean getBool(String id){
         return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildBoolean();
     }
