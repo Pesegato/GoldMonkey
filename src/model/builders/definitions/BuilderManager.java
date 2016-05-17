@@ -45,12 +45,15 @@ public class BuilderManager {
 
 	}
 
+        static boolean veryVerbose=false;
 	public static <T extends Builder> T getBuilder(String type, String id, Class<T> clazz) {
+            if (veryVerbose){
             System.out.println("1 *"+type+"*");
             System.out.println(builders.get(type));
             System.out.println("2");
             System.out.println(builders.get(type).get(id));
             System.out.println("3");
+            }
 		Builder res = builders.get(type).get(id);
 		if (res == null) {
 			throw new IllegalArgumentException(ERROR + type + "/" + id);
