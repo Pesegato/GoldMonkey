@@ -3,9 +3,8 @@ test-output
 
 *.dll
 *.so
-.nb-gradle/profiles/private/aux-config
-.nb-gradle/private/cache/GoldMonkey-d41d8cd98f00b204e9800998ecf8427e
-.gradle/2.3/taskArtifacts/cache.properties
-*.bin
-.gradle/2.3/taskArtifacts/cache.properties.lock
 /.nb-gradle/
+*.bin
+/.gradle/
+/.nb-gradle/
+/.idea/
