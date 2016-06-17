@@ -1,0 +1,8 @@
+language: java
+sudo: false
+env:
+ - GRADLE_USER_HOME=gradle-cache
+ 
+cache:
+  directories:
+- gradle-cache
