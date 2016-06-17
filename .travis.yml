@@ -6,4 +6,3 @@ env:
 cache:
   directories:
 - gradle-cache
-
