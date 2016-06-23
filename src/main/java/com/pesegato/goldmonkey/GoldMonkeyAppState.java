@@ -1,13 +1,13 @@
 package com.pesegato.goldmonkey;
 
 import com.jme3.app.Application;
-import com.jme3.app.state.AbstractAppState;
-import com.jme3.app.state.AppStateManager;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import com.jme3.app.state.BaseAppState;
 import model.builders.definitions.DefParser;
 
-public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
+public class GoldMonkeyAppState extends BaseAppState {
 
     boolean continuousUpdate = false;
     private static final double UPDATE_DELAY = 1;
@@ -24,27 +24,25 @@ public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
     }
 
     @Override
-    public void initialize(AppStateManager stateManager, Application app) {
-        super.initialize(stateManager, app);
+    protected void initialize(Application app) {
         parser = new DefParser(files);
         parser.readFile();
         setEnabled(continuousUpdate);
     }
 
     @Override
-    public void cleanup() {
-        super.cleanup();
+    protected void cleanup(Application app) {
+
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        // Pause and unpause
-        super.setEnabled(enabled);
-        if (enabled) {
-            // init stuff that is in use while this state is RUNNING
-        } else {
-            // take away everything not needed while this state is PAUSED
-        }
+    protected void onEnable() {
+
+    }
+
+    @Override
+    protected void onDisable() {
+
     }
 
     float currentCycle = 0;
