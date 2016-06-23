@@ -25,6 +25,7 @@ dependencies {
         
     	compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
 		compile 'org.slf4j:slf4j-api:1.7.13'
+		compile 'com.google.code.gson:gson:2.7'
 		runtime 'ch.qos.logback:logback-classic:1.1.2'
 
 }
