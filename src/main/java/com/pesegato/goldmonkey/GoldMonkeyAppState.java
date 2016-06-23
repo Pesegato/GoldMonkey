@@ -20,10 +20,6 @@ public class GoldMonkeyAppState extends AbstractAppState { //3.0 style :(
         this.external=external;
         ArrayList<String> ffiles=new ArrayList<>();
         ffiles.addAll(Arrays.asList(files));
-        if (external)
-            ffiles.add("values/strings.xml");
-        else
-        ffiles.add("/values/strings.xml");
         this.files=ffiles.toArray(files);
     }
 
