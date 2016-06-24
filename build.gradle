@@ -20,10 +20,6 @@ repositories {
     jcenter()
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
-}
-
 dependencies {
 	compile fileTree(dir: 'lib', include: ['*.jar'])
         
