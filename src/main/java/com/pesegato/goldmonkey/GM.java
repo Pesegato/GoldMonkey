@@ -9,19 +9,29 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.HashMap;
 
 public class GM {
 
     public static Logger log = LoggerFactory.getLogger(GM.class);
-
     private static HashMap<String, ColorRGBA> colorRGBAs;
+    private static HashMap<String, String> strings;
+
+    public static Reader getJSON(String name) throws FileNotFoundException {
+        if (GoldMonkeyAppState.external) {
+            return new FileReader("assets/GoldMonkey/" + name + ".json");
+        } else {
+            return new InputStreamReader(GM.class.getResourceAsStream("/GoldMonkey/" + name + ".json"));
+        }
+    }
 
     public static ColorRGBA getColor(String id) {
         if (colorRGBAs == null) {
             try {
                 colorRGBAs = new HashMap<>();
-                GoldColorRGBA[] data = new Gson().fromJson(new FileReader("assets/GoldMonkey/ColorRGBA.json"), GoldColorRGBA[].class);
+                GoldColorRGBA[] data = new Gson().fromJson(getJSON("ColorRGBA"), GoldColorRGBA[].class);
                 for (GoldColorRGBA c : data) {
                     colorRGBAs.put(c.id, c.getColorRGBA());
                 }
@@ -32,13 +42,11 @@ public class GM {
         return colorRGBAs.get(id);
     }
 
-    private static HashMap<String, String> strings;
-
     public static String getStringG(String id) {
         if (strings == null) {
             try {
                 strings = new HashMap<>();
-                GoldString[] data = new Gson().fromJson(new FileReader("assets/GoldMonkey/String.json"), GoldString[].class);
+                GoldString[] data = new Gson().fromJson(getJSON("String"), GoldString[].class);
                 for (GoldString c : data) {
                     strings.put(c.id, c.string);
                 }
@@ -49,9 +57,10 @@ public class GM {
         return strings.get(id);
     }
 
-    public static ColorRGBA getColorRGBA(String id){
-        return ((ColorBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.ColorBuilder",id, ColorBuilder.class)).buildColorRGBA();
+    public static ColorRGBA getColorRGBA(String id) {
+        return ((ColorBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.ColorBuilder", id, ColorBuilder.class)).buildColorRGBA();
     }
+
     public static boolean existsData(String id) {
         try {
             DataBuilder d = ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class));
@@ -60,19 +69,24 @@ public class GM {
             return false;
         }
     }
-    public static boolean getBool(String id){
-        return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildBoolean();
+
+    public static boolean getBool(String id) {
+        return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildBoolean();
     }
-    public static int getInt(String id){
-        return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildInt();
+
+    public static int getInt(String id) {
+        return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildInt();
     }
-    public static float getFloat(String id){
-        return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildFloat();
+
+    public static float getFloat(String id) {
+        return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildFloat();
     }
-    public static double getDouble(String id){
-        return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildDouble();
+
+    public static double getDouble(String id) {
+        return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildDouble();
     }
-    public static String getString(String id){
-        return ((DataBuilder)BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder",id, DataBuilder.class)).buildString();
+
+    public static String getString(String id) {
+        return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildString();
     }
 }
