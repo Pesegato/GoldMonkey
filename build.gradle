@@ -32,3 +32,9 @@ dependencies {
 
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+compileJava.doLast {
+	def buildDate = new Date().format('yyyy-MM-dd HHmm')
+	println "Writing goldmonkey.build.date:" + buildDate
+	new File(destinationDir, 'build.date').text = buildDate
+}
