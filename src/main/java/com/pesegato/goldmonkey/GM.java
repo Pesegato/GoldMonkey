@@ -18,6 +18,7 @@ public class GM {
     public static Logger log = LoggerFactory.getLogger(GM.class);
     private static HashMap<String, ColorRGBA> colorRGBAs;
     private static HashMap<String, String> strings;
+    private static HashMap<String, Number> values;
 
     public static Reader getJSON(String name) throws FileNotFoundException {
         if (GoldMonkeyAppState.external) {
@@ -62,6 +63,37 @@ public class GM {
     }
 
     public static boolean existsData(String id) {
+        if (values == null) {
+            try {
+                values = new HashMap<>();
+                GoldNumber[] data = new Gson().fromJson(getJSON("Data"), GoldNumber[].class);
+                for (GoldNumber c : data) {
+                    values.put(c.id, c.value);
+                }
+            } catch (FileNotFoundException ex) {
+                log.error(null, ex);
+            }
+        }
+        return values.get(id)!=null;
+    }
+
+    public static Number getN(String key, String tag) {
+        Number val = values.get(key);
+        if (val == null) {
+            if (GM.existsData(key + " *")) {
+                System.out.println("GM: Loading value * "+ key);
+                val = values.get(key + " *");
+            } else {
+                System.out.println("GM: Loading value "+key+" "+ tag);
+                val = values.get(key + " " + tag);
+                System.out.println(val+" val");
+            }
+            values.put(key, val);
+        }
+        return val;
+    }
+
+    public static boolean existsDataXML(String id) {
         try {
             DataBuilder d = ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class));
             return true;
@@ -70,15 +102,47 @@ public class GM {
         }
     }
 
+    public static float getFloat(String id) {
+        if (values == null) {
+            try {
+                values = new HashMap<>();
+                GoldNumber[] data = new Gson().fromJson(getJSON("Data"), GoldNumber[].class);
+                System.out.println("data "+data.length);
+                for (GoldNumber c : data) {
+                    values.put(c.id, c.value);
+                    System.out.println("ID "+c.id+" VALUE "+c.value);
+                }
+            } catch (FileNotFoundException ex) {
+                log.error(null, ex);
+            }
+        }
+        return values.get(id).floatValue();
+    }
     public static boolean getBool(String id) {
         return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildBoolean();
     }
 
     public static int getInt(String id) {
+        if (values == null) {
+            try {
+                values = new HashMap<>();
+                GoldNumber[] data = new Gson().fromJson(getJSON("Data"), GoldNumber[].class);
+                System.out.println("data "+data.length);
+                for (GoldNumber c : data) {
+                    values.put(c.id, c.value);
+                }
+            } catch (FileNotFoundException ex) {
+                log.error(null, ex);
+            }
+        }
+        return values.get(id).intValue();
+    }
+
+    public static int getIntXML(String id) {
         return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildInt();
     }
 
-    public static float getFloat(String id) {
+    public static float getFloatXML(String id) {
         return ((DataBuilder) BuilderManager.getBuilder("com.pesegato.goldmonkey.DataBuilder", id, DataBuilder.class)).buildFloat();
     }
 
