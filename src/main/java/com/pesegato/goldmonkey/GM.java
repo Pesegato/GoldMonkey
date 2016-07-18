@@ -19,6 +19,16 @@ public class GM {
     private static HashMap<String, ColorRGBA> colorRGBAs;
     private static HashMap<String, String> strings;
     private static HashMap<String, Number> values;
+    private static String context="*";
+
+    public static void setContext(String context){
+        GM.context=context;
+        values=null;
+    }
+
+    public static String getContext(){
+        return context;
+    }
 
     public static Reader getJSON(String name) throws FileNotFoundException {
         if (GoldMonkeyAppState.external) {
@@ -77,20 +87,28 @@ public class GM {
         return values.get(id)!=null;
     }
 
-    public static Number getN(String key, String tag) {
+    public static Number getN(String key) {
         Number val = values.get(key);
         if (val == null) {
             if (GM.existsData(key + " *")) {
                 System.out.println("GM: Loading value * "+ key);
                 val = values.get(key + " *");
             } else {
-                System.out.println("GM: Loading value "+key+" "+ tag);
-                val = values.get(key + " " + tag);
+                System.out.println("GM: Loading value "+key+" "+ context);
+                val = values.get(key + " " + context);
                 System.out.println(val+" val");
             }
             values.put(key, val);
         }
         return val;
+    }
+
+    public static int getI(String key){
+        return getN(key).intValue();
+    }
+
+    public static float getF(String key){
+        return getN(key).floatValue();
     }
 
     public static boolean existsDataXML(String id) {
