@@ -90,7 +90,10 @@ public class GM {
     public static Number getN(String key) {
         Number val = values.get(key);
         if (val == null) {
-            if (GM.existsData(key + " *")) {
+            if (GM.existsData(key)) {
+                System.out.println("GM: Loading value * "+ key);
+                val = values.get(key);
+            } else if (GM.existsData(key + " *")) {
                 System.out.println("GM: Loading value * "+ key);
                 val = values.get(key + " *");
             } else {

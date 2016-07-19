@@ -15,9 +15,10 @@ public class GoldMonkeyAppState extends BaseAppState {
     String[] files;
     public static boolean external;
 
-    public GoldMonkeyAppState(boolean continuousUpdate, boolean external, String... files) {
+    public GoldMonkeyAppState(boolean continuousUpdate, boolean external, String context, String... files) {
         this.continuousUpdate = continuousUpdate;
         this.external=external;
+        GM.setContext(context);
         ArrayList<String> ffiles=new ArrayList<>();
         ffiles.addAll(Arrays.asList(files));
         this.files=ffiles.toArray(files);
