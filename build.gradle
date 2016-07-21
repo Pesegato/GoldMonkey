@@ -8,6 +8,7 @@ plugins {
 
 //name = the directory name
 version = "0.1.0"
+//version = "0.1.0-SNAPSHOT-${new Date().format("yyyyMMdd-HHmmss")}"
 group = "com.pesegato"
 
 
@@ -25,6 +26,7 @@ dependencies {
         
     	compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
 		compile 'org.slf4j:slf4j-api:1.7.13'
+	    compile 'com.google.guava:guava:19.0'
 		compile 'com.google.code.gson:gson:2.7'
 		runtime 'ch.qos.logback:logback-classic:1.1.2'
 
@@ -35,6 +37,6 @@ sourceCompatibility = '1.8'
 
 compileJava.doLast {
 	def buildDate = new Date().format('yyyy-MM-dd HHmm')
-	println "Writing goldmonkey.build.date:" + buildDate
+	println "Writing goldmonkey.build.date: " + buildDate
 	new File(destinationDir, 'build.date').text = buildDate
 }

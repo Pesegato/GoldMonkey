@@ -1,14 +1,19 @@
 package com.pesegato.goldmonkey;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 import com.jme3.app.Application;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.jme3.app.state.BaseAppState;
 import model.builders.definitions.DefParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GoldMonkeyAppState extends BaseAppState {
 
+    public static Logger log = LoggerFactory.getLogger(GoldMonkeyAppState.class);
     boolean continuousUpdate = false;
     private static final double UPDATE_DELAY = 1;
     private static DefParser parser;
@@ -22,6 +27,7 @@ public class GoldMonkeyAppState extends BaseAppState {
         ArrayList<String> ffiles=new ArrayList<>();
         ffiles.addAll(Arrays.asList(files));
         this.files=ffiles.toArray(files);
+        logBuildInfo();
     }
 
     @Override
@@ -58,4 +64,13 @@ public class GoldMonkeyAppState extends BaseAppState {
         }
     }
 
+    protected void logBuildInfo() {
+        try {
+            java.net.URL u = Resources.getResource("build.date");
+            String build = Resources.toString(u, Charsets.UTF_8);
+            log.info("GoldMonkey build date: " + build);
+        } catch( java.io.IOException e ) {
+            log.error( "Error reading build info", e );
+        }
+    }
 }
