@@ -66,7 +66,7 @@ public class GoldMonkeyAppState extends BaseAppState {
 
     protected void logBuildInfo() {
         try {
-            java.net.URL u = Resources.getResource("build.date");
+            java.net.URL u = Resources.getResource("goldmonkey.build.date");
             String build = Resources.toString(u, Charsets.UTF_8);
             log.info("GoldMonkey build date: " + build);
         } catch( java.io.IOException e ) {
