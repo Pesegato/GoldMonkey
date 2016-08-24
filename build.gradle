@@ -3,11 +3,19 @@ plugins {
 	id "maven"
 //  id "eclipse"
 //  id "idea"
+    id 'pl.allegro.tech.build.axion-release' version '1.4.0'
 }
 
+scmVersion {
+    tag {
+        prefix = 'GoldMonkey'
+    }
+}
+
+project.version = scmVersion.version
 
 //name = the directory name
-version = "0.1.0"
+//version = "0.1.0"
 //version = "0.1.0-SNAPSHOT-${new Date().format("yyyyMMdd-HHmmss")}"
 group = "com.pesegato"
 
