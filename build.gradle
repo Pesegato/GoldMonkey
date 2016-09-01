@@ -13,6 +13,8 @@ scmVersion {
 }
 
 project.version = scmVersion.version
+def fullversion = "git describe --always --dirty".execute().text.trim()
+println("version : '${project.version}/${fullversion}'")
 
 //name = the directory name
 //version = "0.1.0"
@@ -46,6 +48,23 @@ sourceCompatibility = '1.8'
 
 compileJava.doLast {
 	def buildDate = new Date().format('yyyy-MM-dd HHmm')
-	println "Writing goldmonkey.build.date: " + buildDate
-	new File(destinationDir, 'goldmonkey.build.date').text = buildDate
+	println "Writing ${scmVersion.tag.prefix}.build.date: " + buildDate
+	new File(destinationDir, "${scmVersion.tag.prefix}.build.date").text = buildDate
+	new File(destinationDir, "${scmVersion.tag.prefix}.build.version").text = "${fullversion}"
+}
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	classifier = 'javadoc'
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
 }
