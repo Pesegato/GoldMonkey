@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 
+import static com.pesegato.goldmonkey.GoldMonkeyAppState.basePath;
+
 public class GM {
 
     public static Logger log = LoggerFactory.getLogger(GM.class);
@@ -31,8 +33,8 @@ public class GM {
     }
 
     public static Reader getJSON(String name) throws FileNotFoundException {
-        if (GoldMonkeyAppState.external) {
-            return new FileReader("assets/GoldMonkey/" + name + ".json");
+        if (GoldMonkeyAppState.externalJSON) {
+            return new FileReader(basePath + name + ".json");
         } else {
             return new InputStreamReader(GM.class.getResourceAsStream("/GoldMonkey/" + name + ".json"));
         }
