@@ -18,10 +18,10 @@ class GoldColorRGBA {
 
     ColorRGBA getColorRGBA(){
         ColorRGBA c = new ColorRGBA(0, 0, 0, 0);
-        c.r = red / 255;
-        c.g = green / 255;
-        c.b = blue / 255;
-        c.a = alpha / 255;
+        c.r = red / 255f;
+        c.g = green / 255f;
+        c.b = blue / 255f;
+        c.a = alpha / 255f;
         return c;
     }
 }
