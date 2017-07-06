@@ -26,6 +26,7 @@ public class GM {
     public static void setContext(String context){
         GM.context=context;
         values=null;
+        existsData("*");
     }
 
     public static String getContext(){
