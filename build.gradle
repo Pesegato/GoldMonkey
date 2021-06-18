@@ -1,9 +1,9 @@
 plugins {
 	id "java"
-	id "maven"
+	id "maven-publish"
 //  id "eclipse"
 //  id "idea"
-    id 'pl.allegro.tech.build.axion-release' version '1.4.0'
+    id 'pl.allegro.tech.build.axion-release' version '1.12.0'
 }
 
 scmVersion {
@@ -33,13 +33,13 @@ repositories {
 }
 
 dependencies {
-	compile fileTree(dir: 'lib', include: ['*.jar'])
-        
-    	compile "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
-		compile 'org.slf4j:slf4j-api:1.7.13'
-	    compile 'com.google.guava:guava:19.0'
-		compile 'com.google.code.gson:gson:2.7'
-		runtime 'ch.qos.logback:logback-classic:1.1.2'
+	implementation fileTree(dir: 'lib', include: ['*.jar'])
+
+	implementation "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
+	implementation 'org.slf4j:slf4j-api:1.7.13'
+	implementation 'com.google.guava:guava:19.0'
+	implementation 'com.google.code.gson:gson:2.7'
+	runtimeOnly 'ch.qos.logback:logback-classic:1.1.2'
 
 }
 
@@ -56,12 +56,12 @@ compileJava.doLast {
 
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
+	archiveClassifier.set("sources")
 	from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = 'javadoc'
+	archiveClassifier.set("javadoc")
 	from javadoc.destinationDir
 }
 
