@@ -3,21 +3,12 @@ plugins {
 	id "maven-publish"
 //  id "eclipse"
 //  id "idea"
-    id 'pl.allegro.tech.build.axion-release' version '1.13.2'
+	id 'com.palantir.git-version' version '0.12.3'
 }
 
-scmVersion {
-    tag {
-        prefix = 'GoldMonkey'
-    }
-}
+project.version gitVersion()
 
-project.version = scmVersion.version
-def fullversion = "git describe --always --dirty".execute().text.trim()
-println("version : '${project.version}/${fullversion}'")
-
-//name = the directory name
-//version = "0.1.0"
+println("version : ${project.version}")
 
 //version = "0.1.0-SNAPSHOT-${new Date().format("yyyyMMdd-HHmmss")}"
 group = "com.pesegato"
@@ -49,9 +40,9 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 compileJava.doLast {
 	def buildDate = new Date().format('yyyy-MM-dd HHmm')
-	println "Writing ${scmVersion.tag.prefix}.build.date: " + buildDate
-	new File(destinationDir, "${scmVersion.tag.prefix}.build.date").text = buildDate
-	new File(destinationDir, "${scmVersion.tag.prefix}.build.version").text = "${fullversion}"
+	println "Writing ${name}.build.date: " + buildDate
+	new File(destinationDir, "${name}.build.date").text = buildDate
+	new File(destinationDir, "${name}.build.version").text = "${fullversion}"
 }
 
 
