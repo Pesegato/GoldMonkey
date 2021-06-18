@@ -8,7 +8,7 @@ plugins {
 
 project.version gitVersion()
 
-println("version : ${project.version}")
+println("version : '${version}'")
 
 //version = "0.1.0-SNAPSHOT-${new Date().format("yyyyMMdd-HHmmss")}"
 group = "com.pesegato"
@@ -40,11 +40,18 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 compileJava.doLast {
 	def buildDate = new Date().format('yyyy-MM-dd HHmm')
-	println "Writing ${name}.build.date: " + buildDate
-	new File(destinationDir, "${name}.build.date").text = buildDate
-	new File(destinationDir, "${name}.build.version").text = "${fullversion}"
+	println "Writing ${rootProject.name}.build.date: " + buildDate
+	new File(destinationDir, "${rootProject.name}.build.date").text = buildDate
+	new File(destinationDir, "${rootProject.name}.build.version").text = "${version}"
 }
 
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
 	archiveClassifier.set("sources")
