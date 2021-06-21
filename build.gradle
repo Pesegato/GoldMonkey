@@ -1,9 +1,9 @@
 plugins {
-	id "java"
-	id "maven-publish"
+    id "java"
+    id "maven-publish"
 //  id "eclipse"
 //  id "idea"
-	id 'com.palantir.git-version' version '0.12.3'
+    id 'com.palantir.git-version' version '0.12.3'
 }
 
 project.version gitVersion()
@@ -15,21 +15,23 @@ group = "com.pesegato"
 
 
 ext {
-	jmonkeyengine_version = '3.4.0-stable'
+    jmonkeyengine_version = '3.4.0-stable'
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral() {
+        allowInsecureProtocol = true
+    }
 }
 
 dependencies {
-	implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
 
-	implementation "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
-	implementation 'org.slf4j:slf4j-api:1.7.13'
-	implementation 'com.google.guava:guava:19.0'
-	implementation 'com.google.code.gson:gson:2.7'
-	runtimeOnly 'ch.qos.logback:logback-classic:1.1.2'
+    implementation "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
+    implementation 'org.slf4j:slf4j-api:1.7.13'
+    implementation 'com.google.guava:guava:19.0'
+    implementation 'com.google.code.gson:gson:2.7'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.1.2'
 
 }
 
@@ -38,31 +40,31 @@ targetCompatibility = JavaVersion.VERSION_1_8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 compileJava.doLast {
-	def buildDate = new Date().format('yyyy-MM-dd HHmm')
-	println "Writing ${rootProject.name}.build.date: " + buildDate
-	new File(destinationDir, "${rootProject.name}.build.date").text = buildDate
-	new File(destinationDir, "${rootProject.name}.build.version").text = "${version}"
+    def buildDate = new Date().format('yyyy-MM-dd HHmm')
+    println "Writing ${rootProject.name}.build.date: " + buildDate
+    new File(destinationDir, "${rootProject.name}.build.date").text = buildDate
+    new File(destinationDir, "${rootProject.name}.build.version").text = "${version}"
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	archiveClassifier.set("sources")
-	from sourceSets.main.allSource
+    archiveClassifier.set("sources")
+    from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-	archiveClassifier.set("javadoc")
-	from javadoc.destinationDir
+    archiveClassifier.set("javadoc")
+    from javadoc.destinationDir
 }
 
 artifacts {
-	archives sourcesJar
-	archives javadocJar
+    archives sourcesJar
+    archives javadocJar
 }
