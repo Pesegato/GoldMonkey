@@ -15,12 +15,12 @@ group = "com.pesegato"
 
 
 ext {
-	jmonkeyengine_version = '3.2.1-stable'
+	jmonkeyengine_version = '3.4.0-stable'
 }
 
 repositories {
 	mavenLocal()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
