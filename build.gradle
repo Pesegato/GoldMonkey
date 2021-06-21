@@ -43,8 +43,6 @@ compileJava.doLast {
 	println "Writing ${rootProject.name}.build.date: " + buildDate
 	new File(destinationDir, "${rootProject.name}.build.date").text = buildDate
 	new File(destinationDir, "${rootProject.name}.build.version").text = "${version}"
-	def ffff = "git status".execute().getText()
-	println ffff
 }
 
 publishing {

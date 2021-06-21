@@ -1,5 +1,6 @@
 /build/
 test-output
+local.properties
 
 *.dll
 *.so
