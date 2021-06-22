@@ -1,8 +1,7 @@
 plugins {
     id "java"
-    id "maven-publish"
 //  id "eclipse"
-//  id "idea"
+    id "idea"
     id 'com.palantir.git-version' version '0.12.3'
 }
 
@@ -44,13 +43,6 @@ compileJava.doLast {
     new File(destinationDir, "${rootProject.name}.build.version").text = "${version}"
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier.set("sources")
