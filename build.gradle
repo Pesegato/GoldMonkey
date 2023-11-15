@@ -23,10 +23,10 @@ dependencies {
     //implementation fileTree(dir: 'lib', include: ['*.jar'])
 
     implementation "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
-    implementation 'org.slf4j:slf4j-api:1.7.13'
+    implementation 'org.slf4j:slf4j-api:1.7.21'
     implementation 'com.google.guava:guava:19.0'
     implementation 'com.google.code.gson:gson:2.7'
-    runtimeOnly 'ch.qos.logback:logback-classic:1.1.2'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
 
 }
 
