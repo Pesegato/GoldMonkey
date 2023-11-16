@@ -1,2 +1,10 @@
-# GoldMonkey [![Build Status](https://travis-ci.org/Pesegato/GoldMonkey.svg?branch=master)](https://travis-ci.org/Pesegato/GoldMonkey) [![Coverage Status](https://coveralls.io/repos/github/Pesegato/GoldMonkey/badge.svg?branch=master)](https://coveralls.io/github/Pesegato/GoldMonkey?branch=master) [![](https://jitpack.io/v/Pesegato/GoldMonkey.svg)](https://jitpack.io/#Pesegato/GoldMonkey)
-XML and JSON Builder for dataset, now with context!
+<div align="center"><img alt="Static Badge" src="https://img.shields.io/badge/🐵Gold-Monkey-yellow?style=for-the-badge"  height="100" align="center">
+
+ # XML and JSON Builder for dataset
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.pesegato/GoldMonkey?style=for-the-badge)](https://central.sonatype.com/artifact/io.github.pesegato/GoldMonkey) 
+[![javadoc](https://javadoc.io/badge2/io.github.pesegato/GoldMonkey/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.pesegato/GoldMonkey) 
+
+</div>
+
+News(?) now with context!
