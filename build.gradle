@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'com.palantir.git-version' version '3.0.0'
+    id 'com.palantir.git-version' version '5.1.0'
 }
 
 group 'io.github.pesegato'
@@ -66,7 +66,7 @@ publishing {
     }
     repositories {
         maven {
-            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
             credentials {
                 username = ossrhUsername
                 password = ossrhPassword
