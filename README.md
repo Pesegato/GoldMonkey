@@ -7,4 +7,7 @@
 
 </div>
 
+<div align="center"><img alt="GoldMonkey Logo" src="goldmonkey-logo.png" align="center">
+</div>
+
 News(?) now with context!
