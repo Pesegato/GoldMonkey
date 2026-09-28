@@ -1,12 +1,12 @@
 package com.pesegato.goldmonkey;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import com.jme3.app.Application;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.jme3.app.state.BaseAppState;
+import io.github.pesegato.goldmonkey.GoldMonkeyBuildInfo;
 import model.builders.definitions.DefParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +24,11 @@ public class GoldMonkeyAppState extends BaseAppState {
 
     public GoldMonkeyAppState(boolean continuousUpdate, boolean external, String context, String... files) {
         this.continuousUpdate = continuousUpdate;
-        this.external=external;
-        this.externalJSON=external;
+        GoldMonkeyAppState.external = external;
+        externalJSON = external;
         GM.setContext(context);
-        ArrayList<String> ffiles=new ArrayList<>();
-        ffiles.addAll(Arrays.asList(files));
-        this.files=ffiles.toArray(files);
+        ArrayList<String> ffiles = new ArrayList<>(Arrays.asList(files));
+        this.files = ffiles.toArray(files);
         logBuildInfo();
     }
 
@@ -73,12 +72,6 @@ public class GoldMonkeyAppState extends BaseAppState {
     }
 
     protected void logBuildInfo() {
-        try {
-            java.net.URL u = Resources.getResource("GoldMonkey.build.date");
-            String build = Resources.toString(u, Charsets.UTF_8);
-            log.info("GoldMonkey build date: " + build);
-        } catch( java.io.IOException e ) {
-            log.error( "Error reading build info", e );
-        }
+        log.info("GoldMonkey build date: " + GoldMonkeyBuildInfo.BUILD_DATE);
     }
 }

@@ -1,28 +1,100 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'signing'
+    id 'com.vanniktech.maven.publish' version '0.37.0'
     id 'com.palantir.git-version' version '5.1.0'
 }
 
-group 'io.github.pesegato'
-version gitVersion()
+def gitDetails = versionDetails()
 
-println("version : '${version}'")
+// Github wants v1.0.0, Maven Central wants 1.0.0
+def rawTag = gitDetails.lastTag
+def cleanTag = (rawTag != null && rawTag.startsWith("v")) ? rawTag.substring(1) : rawTag
+def isSnapshot = !gitDetails.isCleanTag
 
-//version = "0.1.0-SNAPSHOT-${new Date().format("yyyyMMdd-HHmmss")}"
-ext {
-    jmonkeyengine_version = '3.4.0-stable'
-}
+group = 'io.github.pesegato'
+version = isSnapshot
+        ? "${cleanTag}-SNAPSHOT"
+        : cleanTag
+
+println("version : '${version}'  (snapshot: ${isSnapshot})")
 
 repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+// =====================================================
+// GitHub Packages
+// =====================================================
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Pesegato/GoldMonkey")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+// =====================================================
+// Maven Central (solo per le release stabili)
+// =====================================================
+mavenPublishing {
+    publishToMavenCentral(true)
+
+    if (file("/tmp/secring.gpg").exists()) {
+        signAllPublications()
+    }
+
+    coordinates(group.toString(), 'goldmonkey', version.toString())
+
+    pom {
+        name = 'GoldMonkey'
+        description = 'XML and JSON Builder for dataset.'
+        url = 'https://github.com/pesegato/goldmonkey/'
+        inceptionYear = '2015'
+
+        licenses {
+            license {
+                name = 'BSD 3-Clause License'
+                url = 'https://github.com/pesegato/goldmonkey/blob/main/LICENSE'
+                distribution = 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id = 'pesegato'
+                name = 'Pesegato Ameiurus Melas'
+                email = 'pesegato@outlook.com'
+            }
+        }
+
+        scm {
+            connection = 'scm:git:git://github.com/pesegato/goldmonkey.git'
+            developerConnection = 'scm:git:ssh://git@github.com/pesegato/goldmonkey.git'
+            url = 'https://github.com/pesegato/goldmonkey/'
+        }
+    }
+}
+
+ext {
+    javaVersion = JavaVersion.current()
+    jmeVersion = "3.6.1-stable"
+}
+
 dependencies {
     //implementation fileTree(dir: 'lib', include: ['*.jar'])
 
-    implementation "org.jmonkeyengine:jme3-core:$jmonkeyengine_version"
+    implementation "org.jmonkeyengine:jme3-core:$jmeVersion"
     implementation 'org.slf4j:slf4j-api:2.0.9'
     implementation 'com.google.guava:guava:32.1.3-jre'
     implementation 'com.google.code.gson:gson:2.10.1'
@@ -30,64 +102,61 @@ dependencies {
 
 }
 
-signing {
-    sign publishing.publications
+
+// =====================================================
+// Generazione di BuildInfo.java
+// =====================================================
+
+def buildInfoPackage = "io.github.pesegato." + rootProject.name.toLowerCase()
+def buildInfoClass = "${rootProject.name}BuildInfo"
+
+tasks.register('generateBuildInfo') {
+    def outputDir = layout.buildDirectory.dir("generated/sources/build-info/java")
+
+    // Input: la versione del progetto
+    inputs.property("version", provider { version.toString() })
+
+    // Output: la directory dove viene generata la classe
+    outputs.dir(outputDir)
+
+    doLast {
+        def packagePath = buildInfoPackage.replace('.', '/')
+        def dir = outputDir.get().asFile
+        def packageDir = new File(dir, packagePath)
+        packageDir.mkdirs()
+
+        def buildDate = new Date().format("yyyy-MM-dd HH:mm")
+        def versionValue = version.toString()
+
+        def file = new File(packageDir, "${buildInfoClass}.java")
+        file.text = """\
+package ${buildInfoPackage};
+
+/**
+ * Informazioni di build generate automaticamente da Gradle.
+ * Non modificare questo file a mano.
+ */
+public final class ${buildInfoClass} {
+
+    public static final String VERSION = "${versionValue}";
+    public static final String BUILD_DATE = "${buildDate}";
+
+    private ${buildInfoClass}() {
+        // utility class
+    }
+}
+"""
+        println "Generated ${buildInfoClass}.java → version=${versionValue}, date=${buildDate}"
+    }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom {
-                name = 'GoldMonkey'
-                description = 'XML and JSON Builder for dataset.'
-                url = 'https://github.com/Pesegato/GoldMonkey/'
-                inceptionYear = '2015'
-                licenses {
-                    license {
-                        name = 'BSD 3-Clause License'
-                        url = 'https://github.com/Pesegato/GoldMonkey/blob/main/LICENSE'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'pesegato'
-                        name = 'Pesegato Ameiurus Melas'
-                        email = 'pesegato@outlook.com'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/pesegato/goldmonkey.git'
-                    developerConnection = 'scm:git:ssh://git@github.com/pesegato/goldmonkey.git'
-                    url = 'https://github.com/Pesegato/GoldMonkey/'
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-            credentials {
-                username = ossrhUsername
-                password = ossrhPassword
-            }
-        }
+sourceSets {
+    main {
+        java.srcDir(generateBuildInfo.outputs)
     }
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-    withJavadocJar()
-    withSourcesJar()
-}
-
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-compileJava.doLast {
-    def buildDate = new Date().format('yyyy-MM-dd HHmm')
-    println "Writing ${rootProject.name}.build.date: " + buildDate
-    destinationDirectory.file("${rootProject.name}.build.date").get().asFile.text = buildDate
-    destinationDirectory.file("${rootProject.name}.build.version").get().asFile.text = "${version}"
+// Assicurati che la generazione avvenga prima della compilazione
+tasks.named('compileJava') {
+    dependsOn('generateBuildInfo')
 }
