@@ -1,53 +1,54 @@
 <div align="center"><img alt="Static Badge" src="https://img.shields.io/badge/🐵Gold-Monkey-yellow?style=for-the-badge" height="100" align="center">
-    
-    # XML and JSON Builder for dataset
-    
-    [![Maven Central](https://img.shields.io/maven-central/v/io.github.pesegato/GoldMonkey?style=for-the-badge)](https://central.sonatype.com/artifact/io.github.pesegato/GoldMonkey)
-    [![GitHub Packages](https://img.shields.io/github/v/tag/Pesegato/GoldMonkey?label=GitHub%20Packages&style=for-the-badge)](https://github.com/Pesegato/GoldMonkey/packages/3277776)
-    [![javadoc](https://javadoc.io/badge2/io.github.pesegato/GoldMonkey/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.pesegato/GoldMonkey)
-    
-    </div>
-    
-    <div align="center"><img alt="GoldMonkey Logo" src="goldmonkey-logo.png" align="center">
-    </div>
-    
-    GoldMonkey is a lightweight Java library designed for [jMonkeyEngine](https://jmonkeyengine.org/) (jme3) applications that lets you externalize game and dataset values (colors, strings, booleans, and numeric parameters) into
+
+# XML and JSON Builder for dataset
+
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.pesegato/GoldMonkey?style=for-the-badge)](https://central.sonatype.com/artifact/io.github.pesegato/GoldMonkey)
+[![GitHub Packages](https://img.shields.io/github/v/tag/Pesegato/GoldMonkey?label=GitHub%20Packages&style=for-the-badge)](https://github.com/Pesegato/GoldMonkey/packages/3277776)
+[![javadoc](https://javadoc.io/badge2/io.github.pesegato/GoldMonkey/javadoc.svg?style=for-the-badge)](https://javadoc.io/doc/io.github.pesegato/GoldMonkey)
+
+</div>
+
+<div align="center"><img alt="GoldMonkey Logo" src="goldmonkey-logo.png" align="center">
+</div>
+
+GoldMonkey is a lightweight Java library designed for [jMonkeyEngine](https://jmonkeyengine.org/) (jme3) applications that lets you externalize game and dataset values (colors, strings, booleans, and numeric parameters) into
 
 **JSON** or **XML** files, complete with support for contextual overrides (such as localized variants, game states, or
 level-specific tags).
 
-    ---
-    
-    ## Features
-    
-    - **JSON & XML Support**: Load definitions from either format seamlessly.
-    - **Context System**: Define default values with wildcards (`*`) and provide context-specific overrides (e.g. `key context_id`).
-    - **Classpath or External Storage**: Load bundled assets inside JARs or external files in `assets/GoldMonkey/` (customizable path).
-    - **jMonkeyEngine Integration**: Plug-and-play GoldMonkeyAppState.java (`BaseAppState`) with optional live polling (`continuousUpdate`).
-    - **Type-safe Retrieval**: Simple accessors for `ColorRGBA`, `AWT Color`, `float`, `int`, `double`, `boolean`, and `String`.
-    
-    ---
-    
-    ## Installation
-    
-    ### Gradle
-    
-    ```groovy
-    repositories {
-        mavenCentral()
-    }
-    
-    dependencies {
-        implementation 'io.github.pesegato:goldmonkey:0.7.7'
-    }
+---
+
+## Features
+
+- **JSON & XML Support**: Load definitions from either format seamlessly.
+- **Context System**: Define default values with wildcards (`*`) and provide context-specific overrides (e.g. `key context_id`).
+- **Classpath or External Storage**: Load bundled assets inside JARs or external files in `assets/GoldMonkey/` (customizable path).
+- **jMonkeyEngine Integration**: Plug-and-play GoldMonkeyAppState.java (`BaseAppState`) with optional live polling (`continuousUpdate`).
+- **Type-safe Retrieval**: Simple accessors for `ColorRGBA`, `AWT Color`, `float`, `int`, `double`, `boolean`, and `String`.
+
+---
+
+## Installation
+
+### Gradle
+
+```groovy
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.pesegato:goldmonkey:0.7.7'
+}
+```
 
 ### Maven
 
-    <dependency>
-        <groupId>io.github.pesegato</groupId>
-        <artifactId>goldmonkey</artifactId>
-        <version>0.7.7</version>
-    </dependency>
+<dependency>
+    <groupId>io.github.pesegato</groupId>
+    <artifactId>goldmonkey</artifactId>
+    <version>0.7.7</version>
+</dependency>
 
 ──────
 
